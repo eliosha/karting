@@ -19,7 +19,7 @@
       INDEPENDENT WEBSITE CONCEPT
       <span>Created for presentation · not an official Meraki website</span>
     </div>
-    <header>
+    <header class="site-header">
       <a class="brand" href="#" aria-label="Meraki Karting home"
         ><img
           src="assets/logo-primary.png"
@@ -43,6 +43,7 @@
             <path d="M3 13 13 3M3 3h10v10" /></svg
         ></a>
       </nav>
+      <span class="nav-progress" aria-hidden="true"></span>
     </header>
     <main id="main">
       <section class="hero">
@@ -97,6 +98,19 @@
         <div>
           <p class="eyebrow">01 / THE FULL EXPERIENCE</p>
           <h2>More than<br />a lap time.</h2>
+          <figure class="experience-media">
+            <img
+              src="assets/pre-grid-night.webp"
+              width="1189"
+              height="1323"
+              loading="lazy"
+              alt="Meraki Karting drivers preparing in their karts at night"
+            />
+            <figcaption>
+              <span>PRE-GRID / 01</span>
+              <strong>Ready when you are.</strong>
+            </figcaption>
+          </figure>
         </div>
         <div>
           <p class="large-copy">
@@ -226,28 +240,30 @@
         </div>
         <div class="group-layout">
           <figure class="group-media">
-            <video
-              data-group-video
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              poster="assets/meraki-group-poster.webp"
-              aria-label="Meraki Karting venue, track action and event highlights"
-            >
-              <source
-                src="assets/meraki-group-background.mp4"
-                type="video/mp4"
-              />
-            </video>
-            <button
-              class="video-control"
-              data-video-toggle
-              type="button"
-              aria-label="Pause background video"
-            >
-              Pause video
-            </button>
+            <div class="video-viewport" data-parallax-media>
+              <video
+                data-group-video
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="assets/meraki-group-poster.webp"
+                aria-label="Meraki Karting venue, track action and event highlights"
+              >
+                <source
+                  src="assets/meraki-group-background.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <button
+                class="video-control"
+                data-video-toggle
+                type="button"
+                aria-label="Pause background video"
+              >
+                Pause video
+              </button>
+            </div>
             <figcaption>MERAKI IN MOTION / TRACK · EVENTS · CREW</figcaption>
           </figure>
           <div id="group-packages"></div>

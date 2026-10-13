@@ -99,9 +99,27 @@ header {
   padding: 0 5%;
   border-bottom: 1px solid var(--line);
   background: var(--deep);
-  position: relative;
-  z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 50;
   box-shadow: 0 12px 40px #00000026;
+  transition:
+    height 220ms ease,
+    transform 260ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+.site-header.nav-scrolled {
+  height: 76px;
+  background: #0b0919e8;
+  backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: 0 16px 40px #0000004d;
+}
+.site-header.nav-hidden {
+  transform: translateY(-110%);
+}
+.site-header:focus-within {
+  transform: translateY(0);
 }
 header::after {
   content: "";
@@ -117,6 +135,13 @@ header::after {
   width: 88px;
   height: 78px;
   object-fit: contain;
+  transition:
+    width 220ms ease,
+    height 220ms ease;
+}
+.nav-scrolled .brand img {
+  width: 66px;
+  height: 66px;
 }
 nav {
   display: flex;
@@ -143,6 +168,24 @@ nav > a:not(.button)::after {
 }
 nav > a:not(.button):hover::after {
   right: 0;
+}
+nav > a[aria-current="location"] {
+  color: var(--orange);
+}
+nav > a[aria-current="location"]::after {
+  right: 0;
+}
+.nav-progress {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  pointer-events: none;
 }
 .button {
   background: var(--orange);
@@ -366,6 +409,55 @@ nav > a:not(.button):hover::after {
   box-shadow: 0 0 0 34px #17143708;
   pointer-events: none;
 }
+.experience > div {
+  position: relative;
+  z-index: 1;
+}
+.experience-media {
+  position: relative;
+  width: min(440px, 100%);
+  margin-top: 46px;
+  isolation: isolate;
+}
+.experience-media::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 16px -16px -16px 16px;
+  background: var(--orange);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 26px) 100%, 0 100%);
+}
+.experience-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 44%;
+  filter: saturate(0.9) contrast(1.04);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 26px) 100%, 0 100%);
+}
+.experience-media figcaption {
+  position: absolute;
+  left: 18px;
+  right: 40px;
+  bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px;
+  color: var(--paper);
+  text-shadow: 0 2px 18px #000;
+}
+.experience-media figcaption span {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.experience-media figcaption strong {
+  font-family: Race, Impact, sans-serif;
+  font-size: 25px;
+  font-style: italic;
+  text-transform: uppercase;
+}
 .large-copy {
   font-size: 26px;
   line-height: 1.5;
@@ -569,6 +661,29 @@ td a:hover {
   background: var(--ink);
   background-image: linear-gradient(135deg, #ffffff03 25%, transparent 25%);
   background-size: 18px 18px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.groups::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: -100px;
+  background: url("../assets/meraki-group-poster.webp") center / cover no-repeat;
+  filter: blur(70px) saturate(1.25);
+  opacity: 0.28;
+  transform: scale(1.12);
+}
+.groups::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 48%, transparent 0 20%, #17143775 46%),
+    linear-gradient(180deg, #17143770, #171437df 72%, #171437);
+  pointer-events: none;
 }
 .group-layout {
   display: grid;
@@ -580,19 +695,42 @@ td a:hover {
   position: sticky;
   top: 30px;
 }
-.group-layout video {
-  display: block;
+.video-viewport {
+  position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
-  object-fit: cover;
+  overflow: hidden;
   background: #090713;
-  border-bottom: 3px solid var(--orange);
+  box-shadow: 0 28px 80px #00000059;
+}
+.video-viewport::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #171437 0%, transparent 16% 84%, #171437 100%),
+    linear-gradient(0deg, #171437 0%, transparent 30%),
+    linear-gradient(180deg, #1714378f 0%, transparent 18%);
+  pointer-events: none;
+}
+.group-layout video {
+  position: absolute;
+  inset: -8% 0;
+  display: block;
+  width: 100%;
+  height: 116%;
+  object-fit: cover;
+  object-position: center;
+  background: #090713;
+  transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.06);
+  will-change: transform;
 }
 .video-control {
   position: absolute;
   right: 12px;
-  bottom: 47px;
-  z-index: 2;
+  bottom: 12px;
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -887,9 +1025,16 @@ footer > a:last-child {
   header {
     height: 82px;
   }
+  .site-header.nav-scrolled {
+    height: 68px;
+  }
   .brand img {
     width: 70px;
     height: 65px;
+  }
+  .nav-scrolled .brand img {
+    width: 56px;
+    height: 56px;
   }
   .menu-toggle {
     display: flex;
@@ -910,6 +1055,9 @@ footer > a:last-child {
     background: var(--deep);
     padding: 25px 5%;
     border-bottom: 1px solid var(--line);
+  }
+  .nav-scrolled nav {
+    top: 68px;
   }
   nav.open {
     display: flex;
@@ -988,6 +1136,14 @@ footer > a:last-child {
     grid-template-columns: 1fr;
     gap: 30px;
   }
+  .experience-media {
+    margin-top: 34px;
+  }
+  .experience-media figcaption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
   .large-copy {
     font-size: 23px;
   }
@@ -1059,7 +1215,7 @@ footer > a:last-child {
     position: relative;
     top: auto;
   }
-  .group-layout video {
+  .video-viewport {
     aspect-ratio: 4 / 5;
   }
   .package-name {
@@ -1118,6 +1274,14 @@ footer > a:last-child {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .site-header,
+  .brand img,
+  .group-layout video {
+    transition: none;
+  }
+  .group-layout video {
+    transform: scale(1.06);
   }
 }
 
