@@ -6,6 +6,7 @@ Independent presentation concept; not commissioned or approved. No live booking 
 
 - Supplied Meraki Karting Packages PDF, visually inspected pages 1–4 for karting, gaming and all seven group packages. Exact prices, durations, minimum group sizes and inclusions are retained. Page 1 lists 30-day validity without explaining its meaning; confirm with business. Publication date unspecified.
 - The primary circular logo and racer hero photograph were supplied by the user. Web assets preserve their brand palette and photographic composition while reducing file size. Additional racer imagery is cropped from PDF page 4. No unrelated stock imagery is used.
+- The Better Together section uses the supplied 15.9-second Meraki video as a muted, looping background. It is resized to 480 × 854, stripped of audio, and served with a poster image and pause/play control. Reduced-motion preferences start it paused.
 - A vector version of the logo and the untouched original photograph should replace the optimized presentation assets before a commercial launch if available.
 - Contact number 0763 170060 is in the PDF. Call and Instagram links initiate enquiries, not confirmed reservations. WhatsApp removed because its availability is unverified.
 - Instagram and Lubowa competitor website requests returned proxy 403 responses. No live review of those sites was possible. No competitor comparison claims are made.

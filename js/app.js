@@ -176,3 +176,38 @@ document.addEventListener("keydown", (event) => {
     menu.focus();
   }
 });
+
+const groupVideo = document.querySelector("[data-group-video]");
+const videoToggle = document.querySelector("[data-video-toggle]");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function updateVideoControl() {
+  const paused = groupVideo.paused;
+  videoToggle.textContent = paused ? "Play video" : "Pause video";
+  videoToggle.setAttribute(
+    "aria-label",
+    paused ? "Play background video" : "Pause background video",
+  );
+}
+
+function applyMotionPreference() {
+  if (reducedMotion.matches) {
+    groupVideo.pause();
+    groupVideo.removeAttribute("autoplay");
+  } else {
+    groupVideo.play().catch(updateVideoControl);
+  }
+  updateVideoControl();
+}
+
+videoToggle.addEventListener("click", () => {
+  if (groupVideo.paused) {
+    groupVideo.play().catch(updateVideoControl);
+  } else {
+    groupVideo.pause();
+  }
+});
+groupVideo.addEventListener("play", updateVideoControl);
+groupVideo.addEventListener("pause", updateVideoControl);
+reducedMotion.addEventListener("change", applyMotionPreference);
+applyMotionPreference();
