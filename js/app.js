@@ -181,7 +181,42 @@ document.addEventListener("keydown", (event) => {
 
 const groupVideo = document.querySelector("[data-group-video]");
 const videoToggle = document.querySelector("[data-video-toggle]");
+const ambientCanvas = document.querySelector("[data-video-ambient]");
+const ambientContext = ambientCanvas.getContext("2d", { alpha: false });
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let ambientVisible = false;
+let ambientTimer;
+let videoUserPaused = false;
+
+function paintAmbientFrame() {
+  if (!ambientVisible || groupVideo.paused || reducedMotion.matches) {
+    ambientTimer = undefined;
+    return;
+  }
+
+  if (groupVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+    ambientContext.drawImage(
+      groupVideo,
+      0,
+      0,
+      ambientCanvas.width,
+      ambientCanvas.height,
+    );
+  }
+  const interval = window.innerWidth <= 700 ? 280 : 180;
+  ambientTimer = window.setTimeout(paintAmbientFrame, interval);
+}
+
+function startAmbientEffect() {
+  if (!ambientTimer && ambientVisible && !groupVideo.paused) {
+    paintAmbientFrame();
+  }
+}
+
+function stopAmbientEffect() {
+  window.clearTimeout(ambientTimer);
+  ambientTimer = undefined;
+}
 
 function updateVideoControl() {
   const paused = groupVideo.paused;
@@ -196,25 +231,49 @@ function applyMotionPreference() {
   if (reducedMotion.matches) {
     groupVideo.pause();
     groupVideo.removeAttribute("autoplay");
-  } else {
+  } else if (ambientVisible && !videoUserPaused) {
     groupVideo.play().catch(updateVideoControl);
+  } else {
+    groupVideo.pause();
   }
   updateVideoControl();
 }
 
 videoToggle.addEventListener("click", () => {
   if (groupVideo.paused) {
+    videoUserPaused = false;
     groupVideo.play().catch(updateVideoControl);
   } else {
+    videoUserPaused = true;
     groupVideo.pause();
   }
 });
 groupVideo.addEventListener("play", updateVideoControl);
-groupVideo.addEventListener("pause", updateVideoControl);
+groupVideo.addEventListener("play", startAmbientEffect);
+groupVideo.addEventListener("pause", () => {
+  updateVideoControl();
+  stopAmbientEffect();
+});
 reducedMotion.addEventListener("change", applyMotionPreference);
+new IntersectionObserver(
+  ([entry]) => {
+    ambientVisible = entry.isIntersecting;
+    if (ambientVisible) {
+      if (!reducedMotion.matches && !videoUserPaused) {
+        groupVideo.play().catch(updateVideoControl);
+      }
+      startAmbientEffect();
+    } else {
+      groupVideo.pause();
+      stopAmbientEffect();
+    }
+  },
+  { rootMargin: "150px 0px", threshold: 0.01 },
+).observe(ambientCanvas);
 applyMotionPreference();
 
 const parallaxMedia = document.querySelector("[data-parallax-media]");
+const groupSection = parallaxMedia.closest(".groups");
 const navLinks = [...navigation.querySelectorAll('a[href^="#"]')];
 let previousScrollY = window.scrollY;
 let scrollFrame;
@@ -245,13 +304,13 @@ function updateParallax() {
     return;
   }
 
-  const bounds = parallaxMedia.getBoundingClientRect();
+  const bounds = groupSection.getBoundingClientRect();
   const totalTravel = window.innerHeight + bounds.height;
   const progress = Math.min(
     1,
     Math.max(0, (window.innerHeight - bounds.top) / totalTravel),
   );
-  const range = Math.min(44, bounds.height * 0.07);
+  const range = Math.min(38, parallaxMedia.clientHeight * 0.075);
   const offset = (progress - 0.5) * range * 2;
   groupVideo.style.setProperty("--parallax-y", `${offset.toFixed(1)}px`);
 }

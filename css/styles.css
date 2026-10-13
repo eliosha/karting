@@ -392,6 +392,7 @@ nav > a[aria-current="location"]::after {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 12%;
+  align-items: start;
   background: var(--paper);
   color: var(--ink);
   position: relative;
@@ -416,6 +417,7 @@ nav > a[aria-current="location"]::after {
 .experience-media {
   position: relative;
   width: min(440px, 100%);
+  height: clamp(250px, 22vw, 340px);
   margin-top: 46px;
   isolation: isolate;
 }
@@ -430,9 +432,9 @@ nav > a[aria-current="location"]::after {
 .experience-media img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   object-fit: cover;
-  object-position: center 44%;
+  object-position: center 48%;
   filter: saturate(0.9) contrast(1.04);
   clip-path: polygon(0 0, 100% 0, calc(100% - 26px) 100%, 0 100%);
 }
@@ -663,16 +665,16 @@ td a:hover {
   background-size: 18px 18px;
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: clip;
 }
 .groups::before {
   content: "";
   position: absolute;
-  z-index: -2;
+  z-index: -3;
   inset: -100px;
   background: url("../assets/meraki-group-poster.webp") center / cover no-repeat;
   filter: blur(70px) saturate(1.25);
-  opacity: 0.28;
+  opacity: 0.16;
   transform: scale(1.12);
 }
 .groups::after {
@@ -681,8 +683,25 @@ td a:hover {
   z-index: -1;
   inset: 0;
   background:
-    radial-gradient(circle at 22% 48%, transparent 0 20%, #17143775 46%),
-    linear-gradient(180deg, #17143770, #171437df 72%, #171437);
+    radial-gradient(circle at 18% 46%, #ff672b18, transparent 31%),
+    radial-gradient(circle at 78% 58%, #4256d31f, transparent 39%),
+    linear-gradient(180deg, #17143773, #171437b8 72%, #171437e8);
+  pointer-events: none;
+}
+.groups > :not(.group-ambient) {
+  position: relative;
+  z-index: 1;
+}
+.group-ambient {
+  position: absolute;
+  z-index: -2;
+  inset: -7%;
+  width: 114%;
+  height: 114%;
+  opacity: 0.48;
+  filter: blur(38px) saturate(1.65) brightness(1.08);
+  transform: translateZ(0) scale(1.04);
+  mix-blend-mode: screen;
   pointer-events: none;
 }
 .group-layout {
@@ -693,12 +712,13 @@ td a:hover {
 }
 .group-layout figure {
   position: sticky;
-  top: 30px;
+  top: 96px;
+  align-self: start;
 }
 .video-viewport {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  height: clamp(380px, 48vh, 520px);
   overflow: hidden;
   background: #090713;
   box-shadow: 0 28px 80px #00000059;
@@ -723,7 +743,7 @@ td a:hover {
   object-fit: cover;
   object-position: center;
   background: #090713;
-  transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.06);
+  transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.1);
   will-change: transform;
 }
 .video-control {
@@ -809,7 +829,7 @@ details li {
 }
 .group-note {
   border-top: 1px solid var(--line);
-  margin-top: 45px;
+  margin-top: 34px;
   padding-top: 25px;
   display: flex;
   gap: 60px;
@@ -1137,6 +1157,9 @@ footer > a:last-child {
     gap: 30px;
   }
   .experience-media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
     margin-top: 34px;
   }
   .experience-media figcaption {
@@ -1216,6 +1239,7 @@ footer > a:last-child {
     top: auto;
   }
   .video-viewport {
+    height: auto;
     aspect-ratio: 4 / 5;
   }
   .package-name {
@@ -1281,7 +1305,10 @@ footer > a:last-child {
     transition: none;
   }
   .group-layout video {
-    transform: scale(1.06);
+    transform: scale(1.1);
+  }
+  .group-ambient {
+    display: none;
   }
 }
 

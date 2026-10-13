@@ -104,6 +104,7 @@
               width="1189"
               height="1323"
               loading="lazy"
+              decoding="async"
               alt="Meraki Karting drivers preparing in their karts at night"
             />
             <figcaption>
@@ -228,6 +229,13 @@
         </div>
       </section>
       <section id="groups" class="section groups">
+        <canvas
+          class="group-ambient"
+          data-video-ambient
+          width="36"
+          height="64"
+          aria-hidden="true"
+        ></canvas>
         <div class="section-heading">
           <div>
             <p class="eyebrow">03 / BETTER TOGETHER</p>
@@ -266,16 +274,18 @@
             </div>
             <figcaption>MERAKI IN MOTION / TRACK · EVENTS · CREW</figcaption>
           </figure>
-          <div id="group-packages"></div>
+          <div class="group-packages-wrap">
+            <div id="group-packages"></div>
+            <aside class="group-note">
+              <span>THE BIG OCCASION</span>
+              <p>
+                Groups of 15+ booking Grand Prix Pro receive free exclusive
+                venue access for 2 hours. All birthday packages are available by
+                booking only.
+              </p>
+            </aside>
+          </div>
         </div>
-        <aside class="group-note">
-          <span>THE BIG OCCASION</span>
-          <p>
-            Groups of 15+ booking Grand Prix Pro receive free exclusive venue
-            access for 2 hours. All birthday packages are available by booking
-            only.
-          </p>
-        </aside>
       </section>
       <section id="gaming" class="section gaming">
         <div class="section-heading">
