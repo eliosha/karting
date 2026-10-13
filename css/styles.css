@@ -31,6 +31,7 @@ body {
   background: var(--deep);
   color: var(--paper);
   font-family: Body, Arial, Helvetica, sans-serif;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
 a {
@@ -80,7 +81,7 @@ em {
   background: var(--paper);
   color: var(--ink);
   padding: 9px 5%;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   display: flex;
   justify-content: space-between;
@@ -108,7 +109,7 @@ nav {
   display: flex;
   align-items: center;
   gap: 36px;
-  font-size: 13px;
+  font-size: 15px;
 }
 nav > a:not(.button):hover,
 .text-link:hover {
@@ -123,7 +124,7 @@ nav > a:not(.button):hover,
   justify-content: space-between;
   padding: 18px 24px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
   min-height: 48px;
 }
 .button:hover {
@@ -131,7 +132,7 @@ nav > a:not(.button):hover,
 }
 .small {
   padding: 14px 20px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .menu-toggle {
   display: none;
@@ -148,7 +149,7 @@ nav > a:not(.button):hover,
   align-items: flex-start;
 }
 .eyebrow {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   font-weight: 700;
   margin-bottom: 28px;
@@ -164,7 +165,7 @@ nav > a:not(.button):hover,
 .intro {
   max-width: 360px;
   line-height: 1.7;
-  font-size: 15px;
+  font-size: 18px;
   color: var(--muted);
   margin: 25px 0 30px;
 }
@@ -175,7 +176,7 @@ nav > a:not(.button):hover,
   flex-wrap: wrap;
 }
 .text-link {
-  font-size: 12px;
+  font-size: 14px;
   padding: 12px 0;
   border-bottom: 1px solid currentColor;
 }
@@ -184,7 +185,7 @@ nav > a:not(.button):hover,
   justify-content: space-between;
   gap: 16px;
   width: 100%;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--muted);
   margin-top: auto;
@@ -220,11 +221,11 @@ nav > a:not(.button):hover,
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.6;
 }
 .hero-photo figcaption > span:first-child {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.12em;
 }
 .photo-index {
@@ -233,7 +234,7 @@ nav > a:not(.button):hover,
   top: 28px;
   border: 1px solid #ffffff60;
   padding: 8px 12px;
-  font-size: 10px;
+  font-size: 12px;
 }
 .race-strip {
   display: flex;
@@ -262,7 +263,7 @@ nav > a:not(.button):hover,
   color: var(--ink);
 }
 .large-copy {
-  font-size: 23px;
+  font-size: 26px;
   line-height: 1.5;
   max-width: 490px;
 }
@@ -277,16 +278,16 @@ nav > a:not(.button):hover,
   gap: 15px;
 }
 .experience-list > div > span {
-  font-size: 10px;
+  font-size: 12px;
   color: #6b657b;
   padding-top: 3px;
 }
 h3 {
-  font-size: 22px;
+  font-size: 25px;
   letter-spacing: -0.03em;
 }
 .experience-list p {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.6;
   color: #625d70;
   margin-top: 8px;
@@ -303,7 +304,7 @@ h3 {
   margin-bottom: 45px;
 }
 .section-heading > p {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.8;
   color: var(--muted);
 }
@@ -324,7 +325,7 @@ h3 {
   color: var(--muted);
   border: 0;
   padding: 14px 20px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .day-switch [aria-pressed="true"] {
   background: var(--paper);
@@ -332,12 +333,12 @@ h3 {
   font-weight: 700;
 }
 .source-link {
-  font-size: 11px;
+  font-size: 14px;
   border-bottom: 1px solid var(--muted);
   padding: 8px 0;
 }
 .rate-description {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted);
   margin: 18px 0;
 }
@@ -351,7 +352,7 @@ table {
 }
 thead {
   background: var(--ink);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
 }
 th,
@@ -360,31 +361,31 @@ td {
   border-bottom: 1px solid var(--line);
 }
 tbody th {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   width: 40%;
 }
 small {
   display: block;
   font-family: Arial, sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 0;
   color: var(--muted);
   margin-top: 7px;
 }
 td {
-  font-size: 18px;
+  font-size: 20px;
 }
 td:last-child {
   text-align: right;
-  font-size: 11px;
+  font-size: 14px;
 }
 td a:hover {
   color: var(--orange);
 }
 .rate-foot > p {
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
   margin-top: 20px;
@@ -401,19 +402,19 @@ td a:hover {
   gap: 20px;
 }
 .rate-foot strong {
-  font-size: 24px;
+  font-size: 27px;
 }
 .rate-foot span {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--muted);
 }
 .rate-foot b {
-  font-size: 19px;
+  font-size: 22px;
   white-space: nowrap;
 }
 .rate-foot a {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--gold);
   white-space: nowrap;
 }
@@ -436,7 +437,7 @@ td a:hover {
   object-fit: cover;
 }
 .group-layout figcaption {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   padding-top: 15px;
   color: var(--muted);
@@ -456,11 +457,11 @@ summary::-webkit-details-marker {
   display: none;
 }
 .package-name {
-  font-size: 21px;
+  font-size: 24px;
   flex: 1;
 }
 .package-price {
-  font-size: 16px;
+  font-size: 19px;
   text-align: right;
 }
 .plus {
@@ -476,7 +477,7 @@ details ul {
   columns: 2;
   margin: 0 0 18px;
   padding-left: 18px;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 2;
   color: var(--muted);
 }
@@ -486,7 +487,7 @@ details li {
 .package-link {
   display: inline-block;
   color: var(--gold);
-  font-size: 11px;
+  font-size: 14px;
   margin: 0 0 24px;
 }
 .group-note {
@@ -498,13 +499,13 @@ details li {
   align-items: center;
 }
 .group-note > span {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--gold);
   white-space: nowrap;
 }
 .group-note p {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.8;
   max-width: 700px;
   color: var(--muted);
@@ -523,16 +524,16 @@ details li {
   padding-top: 23px;
 }
 .gaming-grid article > span {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   color: #625d70;
 }
 .gaming-grid h3 {
   margin: 22px 0 12px;
-  font-size: 28px;
+  font-size: 31px;
 }
 .gaming-grid p {
-  font-size: 11px;
+  font-size: 14px;
   color: #625d70;
 }
 dl {
@@ -544,7 +545,7 @@ dl > div {
   gap: 12px;
   padding: 13px 0;
   border-bottom: 1px solid #17143726;
-  font-size: 11px;
+  font-size: 14px;
 }
 dd {
   margin: 0;
@@ -560,7 +561,7 @@ dd {
   margin: 25px 0;
   color: var(--muted);
   line-height: 1.8;
-  font-size: 13px;
+  font-size: 16px;
   max-width: 400px;
 }
 .contact .text-link {
@@ -569,10 +570,10 @@ dd {
 }
 .visit-info h3 {
   margin-bottom: 28px;
-  font-size: 22px;
+  font-size: 25px;
 }
 .visit-info summary {
-  font-size: 13px;
+  font-size: 16px;
   justify-content: space-between;
 }
 .visit-info summary:after {
@@ -585,13 +586,13 @@ dd {
 }
 .visit-info details p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.8;
   padding-bottom: 20px;
 }
 .visit-info details a {
   display: inline-block;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--gold);
   padding-bottom: 20px;
 }
@@ -604,12 +605,12 @@ footer {
   gap: 30px;
 }
 footer p {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
   color: var(--muted);
 }
 footer > a:last-child {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
 }
 .footer-brand {
@@ -620,7 +621,7 @@ footer > a:last-child {
 .footer-brand span {
   display: block;
   color: var(--orange);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.3em;
   margin-top: 4px;
 }
@@ -673,10 +674,10 @@ footer > a:last-child {
     gap: 30px;
   }
   .package-name {
-    font-size: 18px;
+    font-size: 21px;
   }
   .package-price {
-    font-size: 14px;
+    font-size: 17px;
   }
   .gaming-grid {
     gap: 20px;
@@ -697,12 +698,12 @@ footer > a:last-child {
     gap: 10px;
   }
   .concept span {
-    font-size: 9px;
+    font-size: 11px;
   }
 }
 @media (max-width: 700px) {
   .concept {
-    font-size: 8px;
+    font-size: 10px;
     justify-content: center;
   }
   .concept span {
@@ -723,7 +724,7 @@ footer > a:last-child {
     padding: 12px;
     background: transparent;
     color: var(--paper);
-    font-size: 12px;
+    font-size: 14px;
   }
   nav {
     display: none;
@@ -770,12 +771,12 @@ footer > a:last-child {
     align-items: flex-end;
   }
   .hero-photo figcaption > span:last-child {
-    font-size: 10px;
+    font-size: 12px;
   }
   .race-strip {
     gap: 8px;
     padding: 18px 4%;
-    font-size: 9px;
+    font-size: 11px;
   }
   .star {
     font-size: 18px;
@@ -784,7 +785,7 @@ footer > a:last-child {
     padding: 55px 6%;
   }
   .eyebrow {
-    font-size: 9px;
+    font-size: 11px;
     margin-bottom: 20px;
   }
   h2 {
@@ -795,7 +796,7 @@ footer > a:last-child {
     gap: 30px;
   }
   .large-copy {
-    font-size: 20px;
+    font-size: 23px;
   }
   .section-heading {
     flex-direction: column;
@@ -813,7 +814,7 @@ footer > a:last-child {
   }
   .day-switch button {
     flex: 1;
-    font-size: 10px;
+    font-size: 12px;
     padding: 13px 8px;
   }
   th,
@@ -821,22 +822,22 @@ footer > a:last-child {
     padding: 20px 9px;
   }
   tbody th {
-    font-size: 14px;
+    font-size: 16px;
     width: 35%;
   }
   td {
-    font-size: 13px;
+    font-size: 15px;
     white-space: nowrap;
   }
   td:last-child {
-    font-size: 10px;
+    font-size: 12px;
   }
   thead {
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: 0;
   }
   tbody small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .rate-foot > div {
     padding: 20px;
@@ -869,10 +870,10 @@ footer > a:last-child {
     object-position: center 55%;
   }
   .package-name {
-    font-size: 17px;
+    font-size: 20px;
   }
   .package-price {
-    font-size: 13px;
+    font-size: 16px;
   }
   summary {
     gap: 10px;
@@ -891,7 +892,7 @@ footer > a:last-child {
     font-size: 27px;
   }
   .gaming-grid dl > div {
-    font-size: 12px;
+    font-size: 14px;
   }
   .contact {
     grid-template-columns: 1fr;
@@ -902,20 +903,20 @@ footer > a:last-child {
     padding: 30px 6%;
   }
   footer p {
-    font-size: 9px;
+    font-size: 11px;
   }
   footer > a:last-child {
     width: 100%;
     padding-top: 10px;
   }
   .intro {
-    font-size: 14px;
+    font-size: 17px;
   }
   .actions {
     gap: 18px;
   }
   .text-link {
-    font-size: 11px;
+    font-size: 14px;
   }
   details ul {
     columns: 1;
