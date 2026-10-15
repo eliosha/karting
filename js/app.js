@@ -1,30 +1,40 @@
 "use strict";
 const karts = [
-  ["Cadets", "Single racer", 1],
-  ["Pro-Racer Karts", "Single racer", 1],
-  ["Individual & Marshall", "Two-seater racer", 1],
-  ["Self Driven", "Two-seater racer", 2],
+  ["P1", "Pro-Racer Karts", "Premier single racer · 390cc Honda engine", 1],
+  ["P2", "Cadets", "Junior & beginner single racer · tuned agility", 1],
+  ["P3", "Individual & Marshall", "Two-seater paired run · instructor assist", 1],
+  ["P4", "Self Driven Tandem", "Two-seater dual racer · shared thrill", 2],
 ];
 const money = (n) => "UGX " + n.toLocaleString("en-UG");
 function renderRates(day) {
   const weekend = day === "weekend";
   document.querySelector("#rate-rows").replaceChildren(
-    ...karts.map(([name, description, multiplier]) => {
+    ...karts.map(([pos, name, description, multiplier]) => {
       const tr = document.createElement("tr");
       const label = document.createElement("th");
       label.scope = "row";
-      label.innerHTML = `${name}<small>${description}</small>`;
+      label.innerHTML = `
+        <div class="timing-col">
+          <span class="timing-badge">${pos}</span>
+          <div class="timing-meta">
+            <strong>${name}</strong>
+            <small>${description}</small>
+          </div>
+        </div>
+      `;
       tr.append(label);
       for (const amount of weekend ? [65000, 100000] : [50000, 75000]) {
         const td = document.createElement("td");
-        td.textContent = money(amount * multiplier);
+        td.className = "timing-data";
+        td.innerHTML = `<span class="timing-val">${money(amount * multiplier)}</span>`;
         tr.append(td);
       }
       const action = document.createElement("td");
       const link = document.createElement("a");
+      link.className = "timing-pit-btn";
       link.href = "tel:+256763170060";
-      link.textContent = "Enquire →";
-      link.setAttribute("aria-label", `Call to enquire about ${name}`);
+      link.textContent = "Book Pit →";
+      link.setAttribute("aria-label", `Call to book ${name}`);
       action.append(link);
       tr.append(action);
       return tr;
@@ -182,43 +192,45 @@ document.addEventListener("keydown", (event) => {
 const groupVideo = document.querySelector("[data-group-video]");
 const videoToggle = document.querySelector("[data-video-toggle]");
 const ambientCanvas = document.querySelector("[data-video-ambient]");
-const ambientContext = ambientCanvas.getContext("2d", { alpha: false });
+const ambientContext = ambientCanvas ? ambientCanvas.getContext("2d", { alpha: false, willReadFrequently: false }) : null;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-let ambientVisible = false;
-let ambientTimer;
+let videoVisible = false;
 let videoUserPaused = false;
+let ambientAnimId;
+let lastAmbientTime = 0;
 
-function paintAmbientFrame() {
-  if (!ambientVisible || groupVideo.paused || reducedMotion.matches) {
-    ambientTimer = undefined;
+function paintAmbientFrame(now) {
+  if (!ambientCanvas || !ambientContext || !videoVisible || groupVideo.paused || reducedMotion.matches) {
+    ambientAnimId = undefined;
     return;
   }
 
-  if (groupVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-    ambientContext.drawImage(
-      groupVideo,
-      0,
-      0,
-      ambientCanvas.width,
-      ambientCanvas.height,
-    );
+  if (now - lastAmbientTime >= 160) {
+    if (groupVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      ambientContext.drawImage(groupVideo, 0, 0, ambientCanvas.width, ambientCanvas.height);
+    }
+    lastAmbientTime = now;
   }
-  const interval = window.innerWidth <= 700 ? 280 : 180;
-  ambientTimer = window.setTimeout(paintAmbientFrame, interval);
+
+  ambientAnimId = window.requestAnimationFrame(paintAmbientFrame);
 }
 
 function startAmbientEffect() {
-  if (!ambientTimer && ambientVisible && !groupVideo.paused) {
-    paintAmbientFrame();
+  if (!ambientAnimId && ambientCanvas && videoVisible && !groupVideo.paused && !reducedMotion.matches) {
+    lastAmbientTime = 0;
+    ambientAnimId = window.requestAnimationFrame(paintAmbientFrame);
   }
 }
 
 function stopAmbientEffect() {
-  window.clearTimeout(ambientTimer);
-  ambientTimer = undefined;
+  if (ambientAnimId) {
+    window.cancelAnimationFrame(ambientAnimId);
+    ambientAnimId = undefined;
+  }
 }
 
 function updateVideoControl() {
+  if (!videoToggle || !groupVideo) return;
   const paused = groupVideo.paused;
   videoToggle.textContent = paused ? "Play video" : "Pause video";
   videoToggle.setAttribute(
@@ -228,52 +240,60 @@ function updateVideoControl() {
 }
 
 function applyMotionPreference() {
+  if (!groupVideo) return;
   if (reducedMotion.matches) {
     groupVideo.pause();
     groupVideo.removeAttribute("autoplay");
-  } else if (ambientVisible && !videoUserPaused) {
-    groupVideo.play().catch(updateVideoControl);
+    stopAmbientEffect();
+  } else if (videoVisible && !videoUserPaused) {
+    groupVideo.play().then(startAmbientEffect).catch(updateVideoControl);
   } else {
     groupVideo.pause();
+    stopAmbientEffect();
   }
   updateVideoControl();
 }
 
-videoToggle.addEventListener("click", () => {
-  if (groupVideo.paused) {
-    videoUserPaused = false;
-    groupVideo.play().catch(updateVideoControl);
-  } else {
-    videoUserPaused = true;
-    groupVideo.pause();
-  }
-});
-groupVideo.addEventListener("play", updateVideoControl);
-groupVideo.addEventListener("play", startAmbientEffect);
-groupVideo.addEventListener("pause", () => {
-  updateVideoControl();
-  stopAmbientEffect();
-});
-reducedMotion.addEventListener("change", applyMotionPreference);
-new IntersectionObserver(
-  ([entry]) => {
-    ambientVisible = entry.isIntersecting;
-    if (ambientVisible) {
-      if (!reducedMotion.matches && !videoUserPaused) {
-        groupVideo.play().catch(updateVideoControl);
-      }
-      startAmbientEffect();
+if (videoToggle && groupVideo) {
+  videoToggle.addEventListener("click", () => {
+    if (groupVideo.paused) {
+      videoUserPaused = false;
+      groupVideo.play().then(startAmbientEffect).catch(updateVideoControl);
     } else {
+      videoUserPaused = true;
       groupVideo.pause();
       stopAmbientEffect();
     }
-  },
-  { rootMargin: "150px 0px", threshold: 0.01 },
-).observe(ambientCanvas);
-applyMotionPreference();
+  });
 
-const parallaxMedia = document.querySelector("[data-parallax-media]");
-const groupSection = parallaxMedia.closest(".groups");
+  groupVideo.addEventListener("play", () => {
+    updateVideoControl();
+    startAmbientEffect();
+  });
+  groupVideo.addEventListener("pause", () => {
+    updateVideoControl();
+    stopAmbientEffect();
+  });
+  reducedMotion.addEventListener("change", applyMotionPreference);
+
+  new IntersectionObserver(
+    ([entry]) => {
+      videoVisible = entry.isIntersecting;
+      if (videoVisible) {
+        if (!reducedMotion.matches && !videoUserPaused) {
+          groupVideo.play().then(startAmbientEffect).catch(updateVideoControl);
+        }
+      } else {
+        groupVideo.pause();
+        stopAmbientEffect();
+      }
+    },
+    { rootMargin: "120px 0px", threshold: 0.05 },
+  ).observe(groupVideo);
+
+  applyMotionPreference();
+}
+
 const navLinks = [...navigation.querySelectorAll('a[href^="#"]')];
 let previousScrollY = window.scrollY;
 let scrollFrame;
@@ -296,23 +316,6 @@ function updateActiveNavigation() {
       link.removeAttribute("aria-current");
     }
   });
-}
-
-function updateParallax() {
-  if (reducedMotion.matches) {
-    groupVideo.style.setProperty("--parallax-y", "0px");
-    return;
-  }
-
-  const bounds = groupSection.getBoundingClientRect();
-  const totalTravel = window.innerHeight + bounds.height;
-  const progress = Math.min(
-    1,
-    Math.max(0, (window.innerHeight - bounds.top) / totalTravel),
-  );
-  const range = Math.min(38, parallaxMedia.clientHeight * 0.075);
-  const offset = (progress - 0.5) * range * 2;
-  groupVideo.style.setProperty("--parallax-y", `${offset.toFixed(1)}px`);
 }
 
 function updateSmartNavigation() {
@@ -338,7 +341,6 @@ function updateSmartNavigation() {
 
   previousScrollY = currentScrollY;
   updateActiveNavigation();
-  updateParallax();
 }
 
 function requestScrollUpdate() {
@@ -353,3 +355,5 @@ window.addEventListener("scroll", requestScrollUpdate, { passive: true });
 window.addEventListener("resize", requestScrollUpdate);
 reducedMotion.addEventListener("change", requestScrollUpdate);
 updateSmartNavigation();
+
+
